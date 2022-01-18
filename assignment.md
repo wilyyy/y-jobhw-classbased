@@ -10,6 +10,11 @@
 6. Add a single state value (Array) named `counterHistory` and push the counter value to that array (from the store). Consider using `key` prop for every item in the list (to avoid Warning: Each child in a list should have a unique "key" prop). Do this using `setInterval` every 2 seconds. Display this array in a simple list (using ul and li). Slice the array to display only the last 10 values.
 
 ### NOTE: Add every task as a different commit: Assignment 1, Assignment 2, etc
+### Make sure you use `destructuring` for props and state and use correctly the implementation for `connect` 
 
 
-```Please resend this as a compressed file or push this to your own repo and send us the link ```
+```Please resend this as a compressed file or push this to your own repo and send us the link```
+
+### Running example
+
+https://share.vidyard.com/watch/s46sdxfj7B3hC4tYBSqgdj?
