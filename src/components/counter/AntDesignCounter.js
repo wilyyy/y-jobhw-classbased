@@ -7,7 +7,7 @@ import {
     reset,
     incrementAsync,
     selectCount,
-  } from './counterSlice';
+} from './counterSlice';
 import styled from "styled-components";
 import { Card, Button } from 'antd';
 
@@ -49,8 +49,8 @@ const Counter = styled.p`
     justify-content: center;
     height: 100px;
     border-radius: 10px;
-    color: ${props=>props.bgcolor};
-    border: 5px solid ${props=>props.bgcolor};
+    color: ${props => props.isOdd? "green" : "#fff"};
+    border: 5px solid ${props => props.isOdd? "green" : "#fff"};
 `;
 
 const Input = styled.input`
@@ -77,7 +77,7 @@ const CardCounter = styled.div`
     justify-content: center;
     width: 250px;
     height: 50px;
-    background-color: ${props=>props.bgcolor};
+    background-color: ${props => props.isOdd? "green" : "#151415"};
     color: #fff;
     box-shadow: inset 0px 0px 20px 3px rgba(0, 0, 0, 0.5);
 `;
@@ -118,7 +118,7 @@ const mapDispatchToProps = (dispatch) => {
         increment: () => dispatch(increment()),
         decrement: () => dispatch(decrement()),
         reset: () => dispatch(reset()),
-        incrementByAmount: () => dispatch(incrementByAmount()),
+        incrementByAmount: (amount) => dispatch(incrementByAmount(amount)),
         incrementAsync: () => dispatch(incrementAsync()),
         selectCount: () => dispatch(selectCount()),
     }   
@@ -129,7 +129,7 @@ class AntDesignCounter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            incrementAmount: '2'
+            incrementAmount: "2"
         };
     }
 
@@ -146,10 +146,7 @@ class AntDesignCounter extends React.Component {
                         >
                             -
                         </AntButton>
-                        <Counter 
-                            bgcolor={this.props.count % 2 !== 0 ? 'green' : '#fff'}
-                            color={this.props.count % 2 !== 0 ? 'green' : '#fff'}
-                        >
+                        <Counter isOdd={Boolean(this.props.count % 2)}>
                             <p>{this.props.count}</p>
                         </Counter>
                         <AntButton 
@@ -184,9 +181,7 @@ class AntDesignCounter extends React.Component {
                 <AntCard 
                     title="Ant Design Counter"
                 >
-                    <CardCounter
-                        bgcolor={this.props.count % 2 !== 0 ? 'green' : '#151415'}
-                    >
+                    <CardCounter isOdd={Boolean(this.props.count % 2)}>
                         {this.props.count}
                     </CardCounter>
                 </AntCard>
