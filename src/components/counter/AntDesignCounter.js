@@ -11,7 +11,7 @@ import {
 import styled from "styled-components";
 import { Card, Button } from 'antd';
 
-//styled components set up
+//Styled comps & ant design ------------------------------------
 const Page = styled.div`
     width: 100vw;
     height: 100vh;
@@ -107,6 +107,8 @@ const AntButton = styled(Button)`
     }
 `;
 
+
+//Selector and dispatch props ----------------------------------
 const mapStateToProps = (state) => {
     return {
         count: state.counter.value
@@ -119,17 +121,18 @@ const mapDispatchToProps = (dispatch) => {
         decrement: () => dispatch(decrement()),
         reset: () => dispatch(reset()),
         incrementByAmount: (amount) => dispatch(incrementByAmount(amount)),
-        incrementAsync: () => dispatch(incrementAsync()),
+        incrementAsync: (amount) => dispatch(incrementAsync(amount)),
         selectCount: () => dispatch(selectCount()),
     }   
 };
 
-//default component
+//default component --------------------------------------------
 class AntDesignCounter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            incrementAmount: "2"
+            incrementAmount: "2",
+            counterHistory: []
         };
     }
 
@@ -172,6 +175,13 @@ class AntDesignCounter extends React.Component {
                     <AntButton 
                         width='50%'
                         height='25px'
+                        onClick={() => this.props.incrementAsync(Number(this.state.incrementAmount))}
+                    >
+                        Add Amount by Async
+                    </AntButton>
+                    <AntButton 
+                        width='50%'
+                        height='25px'
                         onClick={() => this.props.reset()}
                     >
                         Reset
@@ -189,6 +199,22 @@ class AntDesignCounter extends React.Component {
             </Page>
         )
     }
+
+    
+
+    componentDidMount() {
+        const Mount = () => {
+        }
+        setInterval(Mount, 2000);
+    }
+
+    componentWillUnmount() {
+        const Unmount = () => {
+            
+        }
+        setInterval(Unmount, 2000);
+    }
 }
 
+//export component w/ redux props ------------------------------
 export default connect(mapStateToProps, mapDispatchToProps)(AntDesignCounter);
