@@ -141,8 +141,8 @@ class AntDesignCounter extends React.Component {
                             -
                         </AntButton>
                         <Counter 
-                            bgcolor='#fff'
-                            color='#fff'
+                            bgcolor={this.state.count % 2 !== 0 ? 'green' : '#fff'}
+                            color={this.state.count % 2 !== 0 ? 'green' : '#fff'}
                         >
                             {this.state.count}
                         </Counter>
@@ -174,7 +174,7 @@ class AntDesignCounter extends React.Component {
                     title="Ant Design Counter"
                 >
                     <CardCounter
-                        bgcolor='#151415'
+                        bgcolor={this.state.count % 2 !== 0 ? 'green' : '#151415'}
                     >
                         {this.state.count}
                     </CardCounter>
