@@ -16,13 +16,17 @@ export const slice = createSlice({
     decrement: state => {
       state.value -= 1;
     },
+    reset: state => {
+      state.value = 0;
+    },
     incrementByAmount: (state, action) => {
       state.value += action.payload;
     },
+    
   },
 });
 
-export const { increment, decrement, incrementByAmount } = slice.actions;
+export const { increment, decrement, reset, incrementByAmount } = slice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
