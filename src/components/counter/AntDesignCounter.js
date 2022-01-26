@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import {
     decrement,
     increment,
@@ -107,23 +107,29 @@ const AntButton = styled(Button)`
     }
 `;
 
-const mapStateToProps = state => ({
-    count: state.count
-});
-const mapDispatchToProps = () => ({ 
-    increment, 
-    decrement,
-    reset,
-    incrementByAmount,
-    incrementAsync
-});
+const mapStateToProps = (state) => {
+    return {
+        count: state.counter.value
+    }
+};
+
+const mapDispatchToProps = (dispatch) => { 
+    return {
+        increment: () => dispatch(increment()),
+        decrement: () => dispatch(decrement()),
+        reset: () => dispatch(reset()),
+        incrementByAmount: () => dispatch(incrementByAmount()),
+        incrementAsync: () => dispatch(incrementAsync()),
+        selectCount: () => dispatch(selectCount()),
+    }   
+};
 
 //default component
 class AntDesignCounter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            count: 0
+            incrementAmount: '2'
         };
     }
 
@@ -136,35 +142,40 @@ class AntDesignCounter extends React.Component {
                             width="100px"
                             height="70px"
                             fontsize="40px"
-                            onClick={()=>{this.setState({ count: this.state.count - 1 })}}    
+                            onClick={() => this.props.decrement()}
                         >
                             -
                         </AntButton>
                         <Counter 
-                            bgcolor={this.state.count % 2 !== 0 ? 'green' : '#fff'}
-                            color={this.state.count % 2 !== 0 ? 'green' : '#fff'}
+                            bgcolor={this.props.count % 2 !== 0 ? 'green' : '#fff'}
+                            color={this.props.count % 2 !== 0 ? 'green' : '#fff'}
                         >
-                            {this.state.count}
+                            <p>{this.props.count}</p>
                         </Counter>
                         <AntButton 
                             width="100px"
                             height="70px"
-                            onClick={()=>{this.setState({ count: this.state.count + 1 })}}
                             fontsize="40px"
+                            onClick={() => this.props.increment()}
                         >
                             +
                         </AntButton>
                     </Row>
-                    <Input />
+                    <Input 
+                        value={this.state.incrementAmount}
+                        onChange={e => this.setState( {incrementAmount : e.target.value} )}
+                    />
                     <AntButton 
                         width='50%'
                         height='25px'
+                        onClick={() => this.props.incrementByAmount(Number(this.state.incrementAmount))}
                     >
                         Add Amount
                     </AntButton>
                     <AntButton 
                         width='50%'
                         height='25px'
+                        onClick={() => this.props.reset()}
                     >
                         Reset
                     </AntButton>
@@ -174,9 +185,9 @@ class AntDesignCounter extends React.Component {
                     title="Ant Design Counter"
                 >
                     <CardCounter
-                        bgcolor={this.state.count % 2 !== 0 ? 'green' : '#151415'}
+                        bgcolor={this.props.count % 2 !== 0 ? 'green' : '#151415'}
                     >
-                        {this.state.count}
+                        {this.props.count}
                     </CardCounter>
                 </AntCard>
 
@@ -185,4 +196,4 @@ class AntDesignCounter extends React.Component {
     }
 }
 
-export default AntDesignCounter;
+export default connect(mapStateToProps, mapDispatchToProps)(AntDesignCounter);
