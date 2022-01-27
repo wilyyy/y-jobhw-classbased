@@ -107,6 +107,10 @@ const AntButton = styled(Button)`
     }
 `;
 
+const CounterListItem = styled.li`
+    font-size: 16px;
+`;
+
 
 //Selector and dispatch props ----------------------------------
 const mapStateToProps = (state) => {
@@ -187,32 +191,32 @@ class AntDesignCounter extends React.Component {
                         Reset
                     </AntButton>
                 </CounterCont>
-
                 <AntCard 
                     title="Ant Design Counter"
                 >
                     <CardCounter isOdd={Boolean(this.props.count % 2)}>
                         {this.props.count}
                     </CardCounter>
+                    <ul>
+                        {this.state.counterHistory.map((o, i) => (
+                            <CounterListItem key={i}>
+                                {this.state.counterHistory[o]}
+                            </CounterListItem>
+                        ))}
+                    </ul>
                 </AntCard>
 
             </Page>
         )
     }
 
-    
-
     componentDidMount() {
         const Mount = () => {
+            let slicedArray = this.state.counterHistory.slice(0, 10);
+            slicedArray.unshift(this.props.count);
+            this.setState( {counterHistory : slicedArray} );
         }
         setInterval(Mount, 2000);
-    }
-
-    componentWillUnmount() {
-        const Unmount = () => {
-            
-        }
-        setInterval(Unmount, 2000);
     }
 }
 
